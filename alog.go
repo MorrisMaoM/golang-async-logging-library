@@ -29,8 +29,11 @@ func New(w io.Writer) *Alog {
 		w = os.Stdout
 	}
 	return &Alog{
-		dest: w,
+		dest:    w,
+		msgCh:   make(chan string),
+		errorCh: make(chan error),
 	}
+
 }
 
 // Start begins the message loop for the asynchronous logger. It should be initiated as a goroutine to prevent
