@@ -50,6 +50,10 @@ func (al Alog) formatMessage(msg string) string {
 }
 
 func (al Alog) write(msg string, wg *sync.WaitGroup) {
+	_, err := al.dest.Write([]byte(al.formatMessage(msg)))
+	if err != nil {
+		al.errorCh <- err
+	}
 }
 
 func (al Alog) shutdown() {
